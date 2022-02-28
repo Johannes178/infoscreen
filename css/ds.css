@@ -1,0 +1,23 @@
+#about {
+	width: 80%;
+	height: 100%;
+	border: 1px solid #111111;
+	border-radius: 5px;
+	background: #fed100;
+	color: cornflowerblue;
+	margin: auto;
+	text-align: center;
+	opacity: 80%;
+}
+
+#about.dark {
+	width: 80%;
+	height: 100%;
+	border: 1px solid #111111;
+	border-radius: 5px;
+	background: #121212;
+	color: cornflowerblue;
+	margin: auto;
+	text-align: center;
+	opacity: 80%;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/pwa.css">
+</head>
+<body>
+
+<!-- container for the background videos -->
+
+<div id="container">
+    <video id="appvideo" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
+        <source src="media/appbackground.m4v" type="video/mp4"></source>
+        <source src="media/appbackground.webm" type="video/webm" /></source>
+        Sorry, your browser does not support HTML5 video.
+    </video>
+</div>
+
+<!-- navbar % darkmode button -->
+
+<div class="navbar">
+    <div class="navbarContent">
+        <div class="navbarLinks">
+            <ul id="links">
+                <li><a href="pwa.html">PWA</a></li>
+                <li><a href="ds.html">DS</a></li>
+                <div class="darkbutton">
+                    <input type="checkbox" class="checkbox" id="chk" />
+                    <label class="label" for="chk">
+                        <span style="display: inline-flex; position: absolute; bottom: 1px; left: 2px;z-index: -1"><img src="/media/Dark.png" style="transform: scale(0.75)"><img src="/media/Light.png" style="transform: scale(0.75)"></span>
+                        <div class="ball"></div>
+                    </label>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- div for the map function and the map itself (in JS) -->
+
+<div id="pyoraHaku" class="hidden">
+    <h3>Click on the location for info on Citybikes</h3>
+</div>
+
+<div id="map">
+
+
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.0/mapbox-gl.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>
+
