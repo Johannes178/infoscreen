@@ -16,15 +16,11 @@ function switchThemes(theme){
             style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json',  // Style URL; see our documentation for more options
             center: [24.97647089113386, 60.20995013106471],
             // Initial focus coordinate
-            zoom: 14.5
+            zoom: 14.16
         });
         map.addControl(new mapboxgl.NavigationControl());
         drawMarkers()
-
-    }
-    window.removeEventListener("click", showInfo)
-    window.addEventListener("click", showInfo)
-}
+}}
 
 fetchStations()
 // Mapbox GL JS has a bug in it's handling of RTL, so we have to grab this dependency as well until they
@@ -33,8 +29,6 @@ mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl
 
 // Add zoom and rotation controls to the map.
 
-
-const pyoraTulostus = document.querySelector('#pyoraHaku');
 async function fetchStations(){
 //fetch information of bikes from digitransit.fi api
     const response = await fetch(url, {
@@ -46,13 +40,9 @@ async function fetchStations(){
             query: `
     {
   bikeRentalStations {
-    name
-    stationId
     bikesAvailable
-    spacesAvailable
     lat
     lon
-    allowDropoff
   }
 }
       `,
@@ -75,11 +65,7 @@ async function fetchStations(){
                 "coordinates": [i.lon, i.lat]
             },
             "properties": {
-                "title": i.name,
-                "stationId": i.stationId,
                 "bikesAvailable": i.bikesAvailable,
-                "spacesAvailable": i.spacesAvailable,
-                "allowDropoff": i.allowDropoff
             }
         }
 
@@ -110,10 +96,11 @@ function drawMarkers(){
         let marker = new mapboxgl.Marker(elem);
         marker.setLngLat(point.geometry.coordinates);
 
+
         // You can also create a popup that gets shown when you click on a marker. You can style this using
         // CSS as well if you so desire. A minimal example is shown. The offset will depend on the height of your image.
         let popup = new mapboxgl.Popup({ offset: 24, closeButton: false });
-        popup.setHTML('<div>' + point.properties.title + '</div>');
+        popup.setHTML('<div>' + point.properties.bikesAvailable + '</div>');
 
         // Set the marker's popup.
         marker.setPopup(popup);
@@ -125,27 +112,6 @@ function drawMarkers(){
     });
 }
 
-function showInfo(event) {
-    //then we check if the user clicked on a marker
-    if(event.target.classList.contains("mapboxgl-marker")){
-        //console.log("clicked")
-        //we grab the unique value from data-id attribute
-        const itemKey = event.target.dataset.id;
-        console.log(markerCollection.features[itemKey])
-        //now with the unique id we can print it on to DOM
-        let html = `
-                <h3 id="name">Station name: ${markerCollection.features[itemKey].properties.title}</h3>
-    <h4 id="stationid">Station number: ${markerCollection.features[itemKey].properties.stationId}</h4>
-    <p id="bikes">Bikes available: ${markerCollection.features[itemKey].properties.bikesAvailable}</p>
-    <p id="spaces">Spaces available: ${markerCollection.features[itemKey].properties.spacesAvailable}</p>
-    <p id="allow">Drop off allowed: ${markerCollection.features[itemKey].properties.allowDropoff ? "yes" : "no"}</p>
-            `
-        pyoraTulostus.innerHTML = html;
-    }else{//console.log("error")
-    }
-}
-
-
 let checkbox = document.querySelector('.checkbox');
 let chk = document.querySelector('#chk');
 
@@ -153,10 +119,6 @@ chk.addEventListener('change', () => {
     //console.log("checkbox clicked")
     document.querySelector("#pyoraHaku").classList.toggle('dark');
     document.querySelector(".navbarContent").classList.toggle('dark');
-    if(document.body.classList.contains('dark')){ //when the body has the class 'dark' currently
-        localStorage.setItem('darkMode', 'disabled'); //store this data if dark mode is off
-        switchThemes("light")
-    }
 });
 if(localStorage.getItem('darkMode') === "disabled"){
     checkbox.checked = false;
