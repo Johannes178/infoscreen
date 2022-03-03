@@ -10,21 +10,13 @@ let markerCollection = {
 
 let map = undefined;
 function switchThemes(theme){
-    if(theme === "dark"){
-        map = new mapboxgl.Map({
-            container: 'map',
-            style: 'https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json',  // Style URL; see our documentation for more options
-            center: [24.93, 60.19],  // Initial focus coordinate
-            zoom: 10
-        });
-        map.addControl(new mapboxgl.NavigationControl());
-        drawMarkers()
-    }else if(theme === "light"){
+    if(theme === "light"){
         map = new mapboxgl.Map({
             container: 'map',
             style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json',  // Style URL; see our documentation for more options
-            center: [24.93, 60.19],  // Initial focus coordinate
-            zoom: 10
+            center: [24.97647089113386, 60.20995013106471],
+            // Initial focus coordinate
+            zoom: 14.5
         });
         map.addControl(new mapboxgl.NavigationControl());
         drawMarkers()
@@ -159,38 +151,16 @@ let chk = document.querySelector('#chk');
 
 chk.addEventListener('change', () => {
     //console.log("checkbox clicked")
-    document.body.classList.toggle('dark');
     document.querySelector("#pyoraHaku").classList.toggle('dark');
     document.querySelector(".navbarContent").classList.toggle('dark');
     if(document.body.classList.contains('dark')){ //when the body has the class 'dark' currently
-        localStorage.setItem('darkMode', 'enabled'); //store this data if dark mode is on
-        switchThemes("dark")
-    }else{
         localStorage.setItem('darkMode', 'disabled'); //store this data if dark mode is off
         switchThemes("light")
     }
-
 });
-
-if(localStorage.getItem('darkMode') === 'enabled'){
-    checkbox.checked = true;
-    switchThemes("dark")
-    document.body.classList.toggle('dark');
-    document.querySelector("#pyoraHaku").classList.toggle('dark');
-    document.querySelector(".navbarContent").classList.toggle('dark');
-    if(document.body.classList.contains('dark')){ //when the body has the class 'dark' currently
-        localStorage.setItem('darkMode', 'enabled'); //store this data if dark mode is on
-    }else{
-        localStorage.setItem('darkMode', 'disabled'); //store this data if dark mode is off
-    }
-}
 if(localStorage.getItem('darkMode') === "disabled"){
     checkbox.checked = false;
     switchThemes("light");
 }
-if(localStorage.getItem('darkMode') === null){
-    checkbox.checked = false;
-    localStorage.setItem('darkMode', 'disabled'); //store this data if dark mode is off
-    switchThemes("light");
-}
+
 
